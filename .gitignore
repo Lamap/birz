@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.firebase/
+.idea
+.firebaserc
+firebase.json
