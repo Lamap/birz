@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { RunningClouds } from './RunningClouds';
-import { Bastard } from './Bastard';
+import { Bastard } from './Bastard/Bastard';
 import { GameDimensions, Ticker } from '../index';
 import { randNumber, detectCollision } from '../utils/Utils';
-import { Birdy } from './Birdy';
+import { Birdy } from './Birdy/Birdy';
 import { Bullet } from './Bullet';
 
 export const Events = {
@@ -17,9 +17,11 @@ export class Game extends PIXI.Container {
   private bulletShotCount: number;
   private birdy: Birdy;
   private bastardBaseTimeGap = {
-    min: 2500,
-    max: 4000
+    min: 3000,
+    max: 5000
   };
+  private nextBastardTimeout: number;
+  private onKeydownProxy = this.onKeydown.bind(this);
 
   constructor(private stage: PIXI.Container) {
     super();
@@ -35,18 +37,15 @@ export class Game extends PIXI.Container {
 
     this.birdy = new Birdy();
     this.addChild(this.birdy);
-    document.addEventListener('keydown', (event: KeyboardEvent) => {
-      this.onKeydown(event);
-    });
+    document.addEventListener('keydown', this.onKeydownProxy);
     Ticker.add(this.checkBirdsVsBastards, this);
     Ticker.add(this.checkBulletsVsBastards, this);
   }
 
-  sendNextBastard(delay: number = 2000) {
-    setTimeout(() => {
+  sendNextBastard(delay: number = 0) {
+    this.nextBastardTimeout = setTimeout(() => {
       const bastard = new Bastard();
       this.activeBastards.push(bastard);
-      console.log(bastard);
       bastard.activate();
       this.stage.addChild(bastard);
       this.sendNextBastard(randNumber(this.bastardBaseTimeGap.min, this.bastardBaseTimeGap.max));
@@ -72,20 +71,22 @@ export class Game extends PIXI.Container {
         new Bullet(new PIXI.Point(this.birdy.x + this.birdy.width, this.birdy.y + this.birdy.shootStartingPoint.y));
       this.addChild(bullet);
       this.activeBullets.push(bullet);
-      console.log(this.activeBullets);
     }
   }
 
   checkBirdsVsBastards() {
-    console.log(this.activeBastards.length, this.activeBullets.length);
     this.activeBastards.forEach((bastard, index) => {
-      if (!bastard.parent) {
+      if (!bastard.isActive) {
         return this.activeBastards.splice(index, 1);
       }
       if (detectCollision(this.birdy, bastard)) {
        this.birdy.explode();
        Ticker.remove(this.checkBirdsVsBastards, this);
-       Ticker.stop();
+       setTimeout(() => {
+        this.endGame();
+        this.birdy.destroy();
+       }, 1200);
+       clearTimeout(this.nextBastardTimeout);
       }
     });
   }
@@ -103,4 +104,16 @@ export class Game extends PIXI.Container {
       });
     });
   }
+
+  endGame() {
+    document.removeEventListener('keydown', this.onKeydownProxy);
+    this.activeBastards.forEach((bastard) => {
+      bastard.cleanUp();
+      bastard.destroy();
+    });
+    Ticker.remove(this.checkBirdsVsBastards, this);
+    Ticker.remove(this.checkBulletsVsBastards, this);
+    this.emit(Events.GAME_ENDED);
+  }
+  startGame() {}
 }

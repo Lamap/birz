@@ -32,6 +32,12 @@ class App {
     this.menuScreen.on(MenuEvents.START_GAME, (version: number) => {
       this.loadGame(version);
     });
+
+    this.game = new Game(this.app.stage);
+    this.game.on(GameEvents.GAME_ENDED, () => {
+      this.app.stage.removeChild(this.game);
+      this.loadMenuScreen();
+    });
   }
 
   loadMenuScreen() {
@@ -41,7 +47,6 @@ class App {
   loadGame(version: number) {
     console.log('loadGame', version);
     this.app.stage.removeChild(this.menuScreen);
-    this.game = new Game(this.app.stage);
     this.game.start();
   }
 }

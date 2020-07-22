@@ -1,7 +1,9 @@
 import * as PIXI from 'pixi.js';
-import { Ticker } from '../index';
-import { GameDimensions } from '../index';
-import { randNumber } from '../utils/Utils';
+import { Ticker } from '../../index';
+import { GameDimensions } from '../../index';
+import { randNumber } from '../../utils/Utils';
+import * as particles from 'pixi-particles';
+import { explosionConfig } from './explosionConfig';
 
 export const Events = {
   SHOOT_BULLET: 'shootBullet'
@@ -10,6 +12,7 @@ export const Events = {
 export class Birdy  extends PIXI.Container {
   public shootStartingPoint: PIXI.Point = new PIXI.Point();
   private body: PIXI.Sprite;
+  private exploison: any;
 
   constructor() {
     super();
@@ -20,8 +23,7 @@ export class Birdy  extends PIXI.Container {
   }
 
   move(direction: 'up' | 'right' | 'down' | 'left') {
-    const moveStep = 4;
-    console.log(direction);
+    const moveStep = 6;
     if (direction === 'down' && this.y + moveStep < GameDimensions.GAME_HEIGHT - this.height) {
       this.y += moveStep;
     }
@@ -38,14 +40,23 @@ export class Birdy  extends PIXI.Container {
 
   shoot() {
     this.emit(Events.SHOOT_BULLET);
-    console.log('shoot');
   }
 
   explode() {
-    console.log('birdy dies');
+    explosionConfig.pos.x = this.width / 2;
+    explosionConfig.pos.y = this.height / 2;
+    this.exploison = new particles.Emitter(this, [PIXI.Texture.from('../assets/imgs/particles/explode.png')], explosionConfig);
+    this.exploison.emit = true;
+    Ticker.add(this.fadeOut, this);
+    this.exploison.playOnceAndDestroy(() => {
+      this.destroy();
+    });
   }
 
-  destroy() {
-    // remove all listeners
+  fadeOut() {
+    if (this.body.alpha < 0) {
+      return Ticker.remove(this.fadeOut, this);
+    }
+    this.body.alpha -= 0.05;
   }
 }

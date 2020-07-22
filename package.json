@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "pixi-particles": "^4.2.1",
     "pixi.js": "^5.3.0"
   },
   "devDependencies": {

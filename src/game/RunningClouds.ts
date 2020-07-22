@@ -15,7 +15,6 @@ export class RunningClouds extends PIXI.Container {
   );
   constructor() {
     super();
-    console.log('runningClouds');
     this.firstBackground.alpha = 0.5;
     this.secondBackground.alpha = 0.5;
     this.addChild(this.firstBackground);
