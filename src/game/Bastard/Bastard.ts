@@ -2,16 +2,21 @@ import * as PIXI from 'pixi.js';
 import * as particles from 'pixi-particles';
 import { Ticker } from '../../index';
 import { GameDimensions } from '../../index';
-import { randNumber } from '../../utils/Utils';
+import { randNumber, getRandomWeightedItem, IweightedItem } from '../../utils/Utils';
 import { explosionConfig } from './explosionConfig';
 
-export const Events = {
-  SAMPLE: 'sample'
-};
-export enum Types {
-  TYPE_1,
-  TYPE_2
-}
+const Types: IweightedItem[] & {name: string; asset: string}[] = [
+  {
+    name: 'type#1',
+    weight: 2,
+    asset: '../assets/imgs/bastards/bastard1/sketch.png'
+  },
+  {
+    name: 'type#2',
+    weight: 3,
+    asset: '../assets/imgs/bastards/bastard2/sketch.png'
+  }
+];
 
 export class Bastard extends PIXI.Container {
   public isActive = true;
@@ -24,9 +29,10 @@ export class Bastard extends PIXI.Container {
 
   // TODO: random scale connected to z-index
 
-  constructor(type: Types = Types.TYPE_1) {
+  constructor() {
     super();
-    this.body = PIXI.Sprite.from('../assets/imgs/bastards/bastard1/sketch.png');
+    const type = getRandomWeightedItem(Types);
+    this.body = PIXI.Sprite.from(type.asset);
     this.addChild(this.body);
   }
 

@@ -26,6 +26,8 @@ export class Game extends PIXI.Container {
   constructor(private stage: PIXI.Container) {
     super();
     console.log('game');
+    window.onblur = () => console.log('blur');
+    window.onfocus = () => console.log('focus');
   }
 
   start() {
@@ -43,6 +45,7 @@ export class Game extends PIXI.Container {
   }
 
   sendNextBastard(delay: number = 0) {
+    console.log('focus::::', document.hasFocus());
     this.nextBastardTimeout = setTimeout(() => {
       const bastard = new Bastard();
       this.activeBastards.push(bastard);

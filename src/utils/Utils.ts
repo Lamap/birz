@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js';
 
-export function randNumber(min: number, max: number) {
-  return min + Math.random() * (max - min);
+export function randNumber(min: number, max: number, roundToInteger = false) {
+  const result = min + Math.random() * (max - min);
+  return roundToInteger ? Math.round(result) : result;
 }
 
 export function detectCollision(body1: PIXI.Container, body2: PIXI.Container, overlap: number = 0) {
@@ -18,4 +19,17 @@ export function detectCollision(body1: PIXI.Container, body2: PIXI.Container, ov
     b2.y + b2.height - overlap < b1.y
 
   return !untouch;
+}
+export interface IweightedItem {
+  weight: number;
+}
+export function getRandomWeightedItem(list: IweightedItem[]): IweightedItem & any {
+  const fullList: IweightedItem[] = [];
+  list.forEach(item => {
+    for (let i = 0; i < item.weight; i++) {
+      fullList.push(item);
+    }
+  });
+  const randomIndex = randNumber(0, fullList.length - 1, true);
+  return fullList[randomIndex];
 }

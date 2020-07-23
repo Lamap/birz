@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { introFrames, IAnimationFrame } from './introAnimConfig';
 
 export const Events = {
   START_GAME: 'startGame',
@@ -11,6 +12,7 @@ export class MenuScreen extends PIXI.Container {
   private playGame1Button = new PIXI.Text('Play #1');
   private playGame2Button = new PIXI.Text('Play #2');
   private playGame3Button = new PIXI.Text('Play #3');
+  private anim: PIXI.AnimatedSprite;
 
   constructor() {
     super();
@@ -40,6 +42,22 @@ export class MenuScreen extends PIXI.Container {
       this.emit(Events.START_GAME, 3);
     });
     this.playGame3Button.y = 60;
+
+    this.initAnimation();
+  }
+
+  initAnimation() {
+    const frames: PIXI.Texture[] = [];
+    introFrames.concat(introFrames.reverse());
+    introFrames.forEach(frame => {
+      for (let i = 0; i < frame.duration; i++) {
+        frames.push(PIXI.Texture.from(frame.src));
+      }
+    });
+    this.anim = new PIXI.AnimatedSprite(frames);
+    this.anim.animationSpeed = 0.3;
+    this.anim.play();
+    this.addChild(this.anim);
   }
 }
 
