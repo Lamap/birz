@@ -88,7 +88,7 @@ export class Game extends PIXI.Container {
       if (!bastard.isActive) {
         return this.activeBastards.splice(index, 1);
       }
-      if (detectCollision(this.birdy, bastard)) {
+      if (detectCollision(this.birdy, bastard, 30)) {
        this.birdy.explode();
        Ticker.remove(this.checkBirdsVsBastards, this);
        setTimeout(() => {

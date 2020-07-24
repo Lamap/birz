@@ -16,7 +16,7 @@ export class Bullet extends PIXI.Container {
     this.x = this.startPoint.x;
     this.y = this.startPoint.y;
     this.body.beginFill(0x000000, 1);
-    this.body.drawCircle(3, 3, 6);
+    this.body.drawCircle(2, 2, 4);
     this.body.endFill();
     this.addChild(this.body);
     Ticker.add(this.fly, this);

@@ -32,21 +32,21 @@ export class MenuScreen extends PIXI.Container {
     this.playGame1Button.on('click', () => {
       this.emit(Events.START_GAME, 1);
     });
-    this.playGame1Button.y = 230;
+    this.playGame1Button.y = 270;
 
     this.playGame2Button.interactive = true;
     this.playGame2Button.buttonMode = true;
     this.playGame2Button.on('click', () => {
       this.emit(Events.START_GAME, 2);
     });
-    this.playGame2Button.y = 270;
+    this.playGame2Button.y = 300;
 
     this.playGame3Button.interactive = true;
     this.playGame3Button.buttonMode = true;
     this.playGame3Button.on('click', () => {
       this.emit(Events.START_GAME, 3);
     });
-    this.playGame3Button.y = 310;
+    this.playGame3Button.y = 340;
 
 
     this.alignHorizontalCenter(this.birdyLogo);
