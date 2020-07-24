@@ -8,8 +8,8 @@ export const explosionConfig = {
     end: 0.3
   },
   color: {
-    start: 'fd1111',
-    end: 'f7a134'
+    start: 'd6b327',
+    end: 'd6b327'
   },
   speed: {
     start: 200,

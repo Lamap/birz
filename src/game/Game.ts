@@ -3,7 +3,7 @@ import { RunningClouds } from './RunningClouds';
 import { Bastard } from './Bastard/Bastard';
 import { GameDimensions, Ticker } from '../index';
 import { randNumber, detectCollision } from '../utils/Utils';
-import { Birdy } from './Birdy/Birdy';
+import { Birdy, Events as BirdEvents } from './Birdy/Birdy';
 import { Bullet } from './Bullet';
 
 export const Events = {
@@ -38,6 +38,11 @@ export class Game extends PIXI.Container {
     this.sendNextBastard();
 
     this.birdy = new Birdy();
+    this.birdy.y = (GameDimensions.GAME_HEIGHT - this.birdy.height) / 2;
+    this.birdy.on(BirdEvents.SHOOT_BULLET, () => {
+      this.shootBullet();
+    });
+
     this.addChild(this.birdy);
     document.addEventListener('keydown', this.onKeydownProxy);
     Ticker.add(this.checkBirdsVsBastards, this);
@@ -70,13 +75,14 @@ export class Game extends PIXI.Container {
     }
     if (event.key === ' ') {
       this.birdy.shoot();
-      const bullet =
-        new Bullet(new PIXI.Point(this.birdy.x + this.birdy.width, this.birdy.y + this.birdy.shootStartingPoint.y));
-      this.addChild(bullet);
-      this.activeBullets.push(bullet);
     }
   }
-
+  shootBullet() {
+    const bullet =
+      new Bullet(new PIXI.Point(this.birdy.x + this.birdy.width, this.birdy.y + this.birdy.shootStartingPoint.y));
+    this.addChild(bullet);
+    this.activeBullets.push(bullet);
+  }
   checkBirdsVsBastards() {
     this.activeBastards.forEach((bastard, index) => {
       if (!bastard.isActive) {
