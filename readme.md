@@ -24,41 +24,41 @@ The colibry is able to catch flies that can spit to the bastards so avoid the da
 
 ## Game characters
 ### The colibry
-![Alt text](/assets/imgs/birdy/sketch.png "The main character")
+![Alt text](/src/assets/imgs/birdy/sketch.png "The main character")
 * wing snapping
 * open it's bake (for catching fly, can catch them only with opened)
 * getting & losing weight
 * eye move
 
 ### Bastard#1
-![Alt text](/assets/imgs/bastards/bastard1/sketch.png "The bastard 1")
+![Alt text](/src/assets/imgs/bastards/bastard1/sketch.png "The bastard 1")
 * propeller rotation
 * smoke
 * engine pistons pounding
 * teeth growing, moving
 
 ### Bastard#2
-![Alt text](/assets/imgs/bastards/bastard2/sketch.png "The bastard 2")
+![Alt text](/src/assets/imgs/bastards/bastard2/sketch.png "The bastard 2")
 * propeller rotation
 * smoke
 * engine pistons pounding
 * teeth growing, moving
 
 ### Bastard#3
-![Alt text](/assets/imgs/bastards/bastard3/sketch.png "The bastard 3")
+![Alt text](/src/assets/imgs/bastards/bastard3/sketch.png "The bastard 3")
 * propeller rotation
 * eye move
 
 ### Bastard#4
-![Alt text](/assets/imgs/bastards/bastard4/sketch.png "The bastard 4")
+![Alt text](/src/assets/imgs/bastards/bastard4/sketch.png "The bastard 4")
 * propeller rotation
 * eye move
 
 ### Bastard#5
-![Alt text](/assets/imgs/bastards/bastard5/sketch.png "The bastard 5")
+![Alt text](/src/assets/imgs/bastards/bastard5/sketch.png "The bastard 5")
 * smoking
 * each part stirs
 
 ### Flies
-![Alt text](/assets/imgs/bullet/fly.png "The small fly")
+![Alt text](/src/assets/imgs/bullet/fly.png "The small fly")
 * wing snapping
