@@ -4,6 +4,7 @@ import { Ticker } from '../../index';
 import { GameDimensions } from '../../index';
 import { randNumber, getRandomWeightedItem, IweightedItem } from '../../utils/Utils';
 import { explosionConfig } from './explosionConfig';
+import { frames as bastard1Frames } from './propAnimSeqs';
 
 const Types: IweightedItem[] & {name: string; asset: string}[] = [
   {
@@ -33,6 +34,14 @@ export class Bastard extends PIXI.Container {
     super();
     const type = getRandomWeightedItem(Types);
     this.body = PIXI.Sprite.from(type.asset);
+
+    // temporal unconceptional override for testing graphics
+    if (type.name === 'type#1') {
+      const frames = bastard1Frames.map(frame => PIXI.Texture.from(frame.src));
+      this.body = new PIXI.AnimatedSprite(frames);
+      (this.body  as PIXI.AnimatedSprite).animationSpeed = 0.3;
+      (this.body  as PIXI.AnimatedSprite).play();
+    }
     this.addChild(this.body);
   }
 
