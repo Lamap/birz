@@ -78,21 +78,28 @@ export class Birdy  extends PIXI.Container {
     this.wings.alpha -= 0.05;
     this.neb.alpha -= 0.05;
   }
+
+  // TODO: create an own frameAnimation to handle all requierements
   setWingsAnimations() {
     const wingFrameTextures = wingFrames.map(item => PIXI.Texture.from(item.src));
     this.wings = new PIXI.AnimatedSprite(wingFrameTextures);
-    this.wings.animationSpeed = 0.45;
-    this.wings.x = -5;
-    this.wings.y = 10;
+    this.wings.animationSpeed = 0.55;
+    this.wings.x = -7;
+    this.wings.y = 3;
 
     this.addChild(this.wings);
   }
   setNeb() {
-    const nebFrameTextures = spittingFrames.map(item => PIXI.Texture.from(item.src));
+    const nebFrameTextures: PIXI.Texture[] = [];
+    spittingFrames.forEach((item) => {
+      for (let i = 0; i < item.duration; i++) {
+        nebFrameTextures.push(PIXI.Texture.from(item.src));
+      }
+    });
     this.neb = new PIXI.AnimatedSprite(nebFrameTextures);
-
     this.neb.x = 148;
     this.neb.y = 46;
+    this.neb.animationSpeed = 0.4;
     this.neb.onLoop = () => {
       this.neb.stop();
       this.emit(Events.SHOOT_BULLET);

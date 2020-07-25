@@ -21,11 +21,11 @@ export const frames = [
   },
   {
     src: '../assets/imgs/birdy/nib/neb0001.png0006.png',
-    duration: 1
+    duration: 2
   },
   {
     src: '../assets/imgs/birdy/nib/neb0001.png0007.png',
-    duration: 1
+    duration: 2
   },
   {
     src: '../assets/imgs/birdy/nib/neb0001.png0008.png',
