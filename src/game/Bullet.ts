@@ -1,12 +1,13 @@
 import * as PIXI from 'pixi.js';
 import { Ticker } from '../index';
 import { GameDimensions } from '../index';
+import { DebuggableContainer } from './DebuggableContainer';
 
 export const Events = {
   REMOVED: 'removed'
 };
 
-export class Bullet extends PIXI.Container {
+export class Bullet extends DebuggableContainer {
   private body: PIXI.Sprite;
   private speed = 6;
 

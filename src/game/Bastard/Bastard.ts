@@ -5,6 +5,7 @@ import { GameDimensions } from '../../index';
 import { randNumber, getRandomWeightedItem, IweightedItem } from '../../utils/Utils';
 import { explosionConfig } from './explosionConfig';
 import { frames as bastard1Frames } from './propAnimSeqs';
+import { DebuggableContainer } from '../DebuggableContainer';
 
 const Types: IweightedItem[] & {name: string; asset: string}[] = [
   {
@@ -19,7 +20,7 @@ const Types: IweightedItem[] & {name: string; asset: string}[] = [
   }
 ];
 
-export class Bastard extends PIXI.Container {
+export class Bastard extends DebuggableContainer {
   public isActive = true;
   private body: PIXI.Sprite;
   private speed: number;
@@ -39,7 +40,7 @@ export class Bastard extends PIXI.Container {
     if (type.name === 'type#1') {
       const frames = bastard1Frames.map(frame => PIXI.Texture.from(frame.src));
       this.body = new PIXI.AnimatedSprite(frames);
-      (this.body  as PIXI.AnimatedSprite).animationSpeed = 0.3;
+      (this.body  as PIXI.AnimatedSprite).animationSpeed = 0.2;
       (this.body  as PIXI.AnimatedSprite).play();
     }
     this.addChild(this.body);

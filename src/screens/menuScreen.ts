@@ -17,7 +17,6 @@ export class MenuScreen extends PIXI.Container {
 
   constructor() {
     super();
-    console.log('MenuScreen');
     this.background.alpha = 0.5;
     this.addChild(this.background);
     this.addChild(this.birdyLogo);
@@ -32,7 +31,7 @@ export class MenuScreen extends PIXI.Container {
     this.playGame1Button.on('click', () => {
       this.emit(Events.START_GAME, 1);
     });
-    this.playGame1Button.y = 270;
+    this.playGame1Button.y = 310;
 
     this.playGame2Button.interactive = true;
     this.playGame2Button.buttonMode = true;

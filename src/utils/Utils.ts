@@ -33,3 +33,4 @@ export function getRandomWeightedItem(list: IweightedItem[]): IweightedItem & an
   const randomIndex = randNumber(0, fullList.length - 1, true);
   return fullList[randomIndex];
 }
+

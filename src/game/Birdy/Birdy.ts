@@ -5,12 +5,13 @@ import * as particles from 'pixi-particles';
 import { explosionConfig } from './explosionConfig';
 import { frames as wingFrames } from './wingsAnimationConfig';
 import { frames as spittingFrames } from './nebAnimationsConfig';
+import { DebuggableContainer } from '../DebuggableContainer';
 
 export const Events = {
   SHOOT_BULLET: 'shootBullet'
 };
 
-export class Birdy  extends PIXI.Container {
+export class Birdy  extends DebuggableContainer {
   public shootStartingPoint: PIXI.Point = new PIXI.Point();
   private body: PIXI.Sprite;
   private exploison: any;
@@ -28,13 +29,6 @@ export class Birdy  extends PIXI.Container {
     this.setWingsAnimations();
     if (!isFrozen) {
       this.wings.play();
-    }
-
-    if ((window as any).debugMode) {
-      const debugRect = new PIXI.Graphics();
-      debugRect.lineStyle(1, 0xff0000);
-      debugRect.drawRect(0, 0, this.width, this.height);
-      this.addChild(debugRect);
     }
   }
 

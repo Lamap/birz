@@ -45,10 +45,10 @@ class App {
   }
 
   loadGame(version: number) {
-    console.log('loadGame', version);
     this.app.stage.removeChild(this.menuScreen);
     this.game.start();
   }
 }
 
+// (window as any).debugMode = true;
 const app = new App();
