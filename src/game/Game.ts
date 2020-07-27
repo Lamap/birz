@@ -22,6 +22,7 @@ export class Game extends PIXI.Container {
   };
   private nextBastardTimeout: number;
   private onKeydownProxy = this.onKeydown.bind(this);
+  private gameEndProxy = this.endGame.bind(this);
 
   constructor(private stage: PIXI.Container) {
     super();
@@ -43,6 +44,7 @@ export class Game extends PIXI.Container {
     document.addEventListener('keydown', this.onKeydownProxy);
     Ticker.add(this.checkBirdsVsBastards, this);
     Ticker.add(this.checkBulletsVsBastards, this);
+    this.birdy.on(BirdEvents.BIRDY_DIED, this.gameEndProxy);
   }
 
   sendNextBastard(delay: number = 0) {
@@ -87,10 +89,6 @@ export class Game extends PIXI.Container {
       if (detectCollision(this.birdy, bastard, 30)) {
        this.birdy.explode();
        Ticker.remove(this.checkBirdsVsBastards, this);
-       setTimeout(() => {
-        this.endGame();
-        this.birdy.destroy();
-       }, 1200);
        clearTimeout(this.nextBastardTimeout);
       }
     });
@@ -118,6 +116,7 @@ export class Game extends PIXI.Container {
     });
     Ticker.remove(this.checkBirdsVsBastards, this);
     Ticker.remove(this.checkBulletsVsBastards, this);
+    this.birdy.off(BirdEvents.BIRDY_DIED, this.gameEndProxy);
     this.emit(Events.GAME_ENDED);
   }
   startGame() {}

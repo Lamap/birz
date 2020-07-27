@@ -8,7 +8,8 @@ import { frames as spittingFrames } from './nebAnimationsConfig';
 import { DebuggableContainer } from '../DebuggableContainer';
 
 export const Events = {
-  SHOOT_BULLET: 'shootBullet'
+  SHOOT_BULLET: 'shootBullet',
+  BIRDY_DIED: 'birdyDied'
 };
 
 export class Birdy  extends DebuggableContainer {
@@ -60,6 +61,7 @@ export class Birdy  extends DebuggableContainer {
     Ticker.add(this.fadeOut, this);
     this.wings.stop();
     this.exploison.playOnceAndDestroy(() => {
+      this.emit(Events.BIRDY_DIED);
       this.destroy();
     });
   }
